@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+</head>
+<body>
+<div>
+    <div class="zone_conn">
+        <input type="text" class="form-control" style="float:left;" id="inp_url" value="" placeholder="连接的地址" />
+        <button type="button" id="btn_conn" class="btn btn-primary" style="float:left;margin-left:10px;margin-right:10px;" onclick="fun_initWebSocket();">连接</button>
+        <button type="button" id="btn_close" class="btn btn-danger" style="float:left;" disabled="disabled" onclick="fun_close();">断开</button>
+    </div>
+    <div class="clearboth">
+        1、连接格式为 ws://IP或域名:端口（示例ws://10.0.60.50:9112?userId=1&token=d77fad7e-2a48-4bf6-9cce-f7bb214635cf&alarmTypes=-1）<br />
+        2、对于<span style="color:red">内网</span>的测试环境，只需填入服务端的<span style="color:red">内网IP</span>和端口<br />
+        3、可连接我上面提供的服务端ws地址来测试您<span style="color:red">自己的客户端</span>
+    </div>
+    <div class="zone_send">
+        <a id="emoji" style="position:relative;left:374px;bottom:5px;cursor:pointer;" data-toggle="popover" title="表情"><img style="outline-width:40px;" src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/5c/huanglianwx_thumb.gif" />表情</a>
+        <textarea id="inp_send" class="form-control" style="height:100px;" placeholder="发送的内容"></textarea>
+        <br />
+        <button type="button" id="btn_send" class="btn btn-info" onclick="fun_sendto();">发送（ctrl+回车）</button>
+    </div>
+</div>
+<div style="position:absolute;top:100px;left:470px;">
+    <div id="div_msgzone" class="panel panel-default">
+        <div class="panel-heading">消息窗口</div>
+        <div id="div_msg" class="panel-body"></div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/sockjs.min.js"></script>
+<script type="text/javascript" src="./js/reconnecting-websocket.js"></script>
+<script type="text/javascript" src="./js/ws.js"></script>
+<script type="text/javascript" >
+    //initws("ws://10.0.60.50:9112?userId=1&token=0d4f47ee-3e16-45c2-8f62-e79147e59ec2&alarmTypes=-1");
+</script>
+</html>
