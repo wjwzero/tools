@@ -1,0 +1,55 @@
+package ${myUtil.packageName}.service;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import ${myUtil.packageName}.entity.${myUtil.entityClassName};
+import ${myUtil.packageName}.mapper.${myUtil.entityClassName}Mapper;
+import java.util.List;
+
+@Service
+public class ${myUtil.entityClassName}Service {
+    @Resource
+    private ${myUtil.entityClassName}Mapper ${myUtil.entityName}Mapper;
+
+    public ${myUtil.entityClassName} getById(<%
+        for(attr in myUtil.list){
+            if(attr.name == "id")
+                print(attr.type);
+        }
+    %> id){
+
+        return ${myUtil.entityName}Mapper.getById(id);
+    }
+
+ <% for(attr in myUtil.list){
+        if(attr.isIndex == true&&attr.name!='id'){  %>
+    public ${myUtil.entityClassName} getBy${attr.upperCamelCaseName}(${attr.type} ${attr.camelCaseName}){
+        return ${myUtil.entityName}Mapper.getBy${attr.upperCamelCaseName}(${attr.camelCaseName});
+    }
+
+  <%    }
+    }   %>
+
+    public List<${myUtil.entityClassName}> getAll(){
+        return ${myUtil.entityName}Mapper.getAll();
+    }
+
+    public Integer insert(${myUtil.entityClassName} ${myUtil.entityName}){
+        return ${myUtil.entityName}Mapper.insert(${myUtil.entityName});
+    }
+
+    public Integer deleteById(<%
+        for(attr in myUtil.list){
+            if(attr.name == "id")
+                print(attr.type);
+        }
+    %> id){
+
+        return ${myUtil.entityName}Mapper.deleteById(id);
+    }
+
+    public Integer update(${myUtil.entityClassName} ${myUtil.entityName}){
+        return ${myUtil.entityName}Mapper.update(${myUtil.entityName});
+    }
+
+}

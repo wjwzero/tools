@@ -1,0 +1,97 @@
+[ {
+  "name" : "id",
+  "camelCaseName" : "id",
+  "type" : "Integer",
+  "index" : true,
+  "nullable" : false,
+  "description" : "主键",
+  "autoIncrement" : false
+}, {
+  "name" : "username",
+  "camelCaseName" : "username",
+  "type" : "String",
+  "index" : true,
+  "nullable" : false,
+  "description" : "用户名、登录名（即账号）",
+  "autoIncrement" : false
+}, {
+  "name" : "password",
+  "camelCaseName" : "password",
+  "type" : "String",
+  "index" : false,
+  "nullable" : false,
+  "description" : "用户密码（加密之后）",
+  "autoIncrement" : false
+}, {
+  "name" : "nickname",
+  "camelCaseName" : "nickname",
+  "type" : "String",
+  "index" : false,
+  "nullable" : false,
+  "description" : "用户昵称",
+  "autoIncrement" : false
+}, {
+  "name" : "phone",
+  "camelCaseName" : "phone",
+  "type" : "String",
+  "index" : true,
+  "nullable" : true,
+  "description" : "用户电话，平台用户手机可以为空，但校验唯一",
+  "autoIncrement" : false
+}, {
+  "name" : "email",
+  "camelCaseName" : "email",
+  "type" : "String",
+  "index" : false,
+  "nullable" : true,
+  "description" : "用户邮箱",
+  "autoIncrement" : false
+}, {
+  "name" : "img",
+  "camelCaseName" : "img",
+  "type" : "String",
+  "index" : false,
+  "nullable" : true,
+  "description" : "平台用户登录app端的头像地址",
+  "autoIncrement" : false
+}, {
+  "name" : "is_disabled",
+  "camelCaseName" : "isDisabled",
+  "type" : "Integer",
+  "index" : false,
+  "nullable" : false,
+  "description" : "是否禁用，默认1. 1=启用;0=禁用",
+  "autoIncrement" : false
+}, {
+  "name" : "gmt_create",
+  "camelCaseName" : "gmtCreate",
+  "type" : "Date",
+  "index" : false,
+  "nullable" : false,
+  "description" : "创建时间, 插入时更新, 不允许修改",
+  "autoIncrement" : false
+}, {
+  "name" : "gmt_modified",
+  "camelCaseName" : "gmtModified",
+  "type" : "Date",
+  "index" : false,
+  "nullable" : false,
+  "description" : "修改时间, 根据当前时间戳更新",
+  "autoIncrement" : false
+}, {
+  "name" : "created_by",
+  "camelCaseName" : "createdBy",
+  "type" : "Integer",
+  "index" : false,
+  "nullable" : false,
+  "description" : "创建人ID",
+  "autoIncrement" : false
+}, {
+  "name" : "modified_by",
+  "camelCaseName" : "modifiedBy",
+  "type" : "Integer",
+  "index" : false,
+  "nullable" : false,
+  "description" : "修改人ID",
+  "autoIncrement" : false
+} ]

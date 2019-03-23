@@ -27,6 +27,7 @@ import com.tools.auto.domain.bo.DataBaseFieldsBO;
 import com.tools.auto.domain.entity.TableColumnsDO;
 import com.tools.auto.mapper.AutoCreateByTableMapper;
 import com.tools.auto.service.AutoCreateByTableService;
+import com.tools.utils.StringUtils;
 import javafx.print.Collation;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class AutoCreateFieldByTableTest extends BaseTest {
         List<TableColumnsDO> columnsList = autoCreateByTableServiceImpl.listColumnsByTable("t_user_account_info");
 
         List<DataBaseFieldsBO> dataBaseFieldsBOList =  columnsList.stream().map(columns -> {
-            DataBaseFieldsBO dbf = new DataBaseFieldsBO(columns.getField(),columns.getType(),columns.getKey(),columns.getNull(),columns.getComment());
+            DataBaseFieldsBO dbf = new DataBaseFieldsBO(columns.getField(),columns.getType(),columns.getKey(),columns.getNull(),StringUtils.underLineToCamel(columns.getField()),columns.getComment());
             return dbf;
         }).collect(Collectors.toList());
         logger.info(objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL).writerWithDefaultPrettyPrinter().writeValueAsString(dataBaseFieldsBOList));

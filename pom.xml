@@ -13,6 +13,7 @@
         <module>task</module>
         <module>report</module>
         <module>auto</module>
+        <module>beetle</module>
     </modules>
 
     <properties>

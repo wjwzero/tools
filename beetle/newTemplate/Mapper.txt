@@ -1,0 +1,114 @@
+package ${myUtil.packageName}.mapper;
+
+import ${myUtil.packageName}.entity.${myUtil.entityClassName};
+import org.apache.ibatis.annotations.*;
+import java.util.List;
+
+@Mapper
+public interface ${myUtil.entityClassName}Mapper {
+    String tableName = "${myUtil.collectionName}";
+
+     @Select("SELECT <%
+        for(attr in myUtil.list)
+        {
+            if(attrLP.last)
+                print(attr.name);
+            else
+                print(attr.name + ", ");
+        }
+     %> FROM " + tableName + " WHERE id = #{id}")
+
+     ${myUtil.entityClassName} getById(<%
+         for(attr in myUtil.list){
+             if(attr.name == "id")
+                 print(attr.type);
+         }
+     %> Id);
+
+<% for(attr_p in myUtil.list){
+        if(attr_p.isIndex == true&&attr_p.name!='id'){  %>
+
+     @Select("SELECT <%
+        for(attr in myUtil.list)
+        {
+            if(attrLP.last)
+                print(attr.name);
+            else
+                print(attr.name + ", ");
+        }
+     %> FROM " + tableName + " WHERE ${attr_p.name} = #{${attr_p.camelCaseName}}")
+     ${myUtil.entityClassName} getBy${attr_p.upperCamelCaseName}(${attr_p.type} ${attr_p.camelCaseName});
+
+  <%    }
+    }   %>
+
+     @Select("SELECT <%
+        for(attr in myUtil.list)
+        {
+            if(attrLP.last)
+                print(attr.name);
+            else
+                print(attr.name + ", ");
+        }
+     %> FROM " + tableName)
+
+     List<${myUtil.entityClassName}> getAll();
+
+     @Insert("INSERT INTO " + tableName + "(<%
+        for(attr in myUtil.list){
+            if(attr.name=="id"&&attr.autoIncrement){
+                continue;
+            }else{
+                if(attrLP.last)
+                    print(attr.name);
+                else
+                    print(attr.name + ", ");
+            }
+        }
+     %>) VALUES (<%
+          for(attr in myUtil.list){
+                if(attr.name=="id"&&attr.autoIncrement){
+                    continue;
+                }else{
+                    if(attrLP.last)
+                        print("#{" + attr.camelCaseName + "}");
+                    else
+                        print("#{" + attr.camelCaseName + "}, ");
+                }
+          }
+     %>)")
+
+<%  for(attr in myUtil.list){
+        if(attr.name == "id"){
+            if(attr.autoIncrement){   %>
+     @Options(useGeneratedKeys = true)
+            <%  }
+        }
+        break;
+     }    %>
+     Integer insert(${myUtil.entityClassName} ${myUtil.entityName});
+
+     @Delete("DELETE FROM " + tableName + " WHERE id = #{id}")
+     Integer deleteById(<%
+         for(attr in myUtil.list){
+             if(attr.name == "id")
+                 print(attr.type);
+         }
+     %> id);
+
+     @Update("UPDATE " + tableName + " SET <%
+        for(attr in myUtil.list){
+            if(attrLP.last){
+                if(attr.name != "id")
+                    print(attr.name + "=#{" + attr.camelCaseName + "}");
+            }else{
+                if(attr.name != "id")
+                    print(attr.name + "=#{" + attr.camelCaseName + "}, ");
+            }
+        }
+      %> WHERE id = #{id}")
+
+     Integer update(${myUtil.entityClassName} ${myUtil.entityName});
+
+
+}

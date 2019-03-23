@@ -1,0 +1,43 @@
+package ${myUtil.packageName}.entity;
+
+import java.util.Date;
+import java.util.List;
+
+public class ${myUtil.entityClassName} {
+<%
+    for(attr in myUtil.list){
+        if(attr.description != null){
+            println("    /**");
+            println("    * " + attr.description);
+            println("    */");
+         }
+        if(attr.defaultValue == null){
+            println("     private " + attr.type + " " + attr.camelCaseName + ";");
+        }else{
+            println("     private " + attr.type + " " + attr.camelCaseName + " = " + attr.defaultValue + ";");
+        }
+
+    }
+     for(attr in myUtil.list){
+        println("     public " + attr.type + " get" + strutil.toUpperCase(strutil.subStringTo(attr.camelCaseName,0,1)) + strutil.subString(attr.camelCaseName,1) + "(){");
+        println("           return this." + attr.camelCaseName + ";");
+        println("     }");
+        println("     public void set" + strutil.toUpperCase(strutil.subStringTo(attr.camelCaseName,0,1)) + strutil.subString(attr.camelCaseName,1) + "(" + attr.type + " " + attr.camelCaseName + "){");
+        println("           this." + attr.camelCaseName + " = " + attr.camelCaseName + ";");
+        println("     }");
+    }
+%>
+
+@Override
+    public String toString() {
+        return "${myUtil.entityClassName}{" +
+                <%
+                    print("            ");
+                    for(attr in myUtil.list){
+                        print('"  ' + attr.camelCaseName + ':" + ' + attr.camelCaseName + " + ");
+                    }
+                %>
+
+        "}";
+    }
+  }

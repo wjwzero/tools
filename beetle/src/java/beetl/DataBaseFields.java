@@ -1,38 +1,27 @@
-package com.tools.auto.domain.bo;
-
-import org.apache.commons.lang3.StringUtils;
+package beetl;
 
 /**
  * Created by yangkaile on 2017/4/10.
  */
-public class DataBaseFieldsBO {
-    public static final String INT = "int";
+public class DataBaseFields {
+    /**
+     * 字段名 映射数据库字段
+     */
     private String name;
-    // 驼峰命名
+    /**
+     * 驼峰命名 首字母小写
+     */
     private String camelCaseName;
+    /**
+     * 驼峰命名 首字母大写
+     */
+    private String upperCamelCaseName;
     private String type;
     private boolean index;
     private boolean nullable;
     private String description;
     private Object defaultValue;
     private boolean autoIncrement;
-
-
-    public DataBaseFieldsBO(String name, String type, String index, String nullable, String camelCaseName, String description) {
-        this.name = name;
-        this.type = type;
-        if(type.contains(INT)){
-            this.type = "Integer";
-        }else if(type.contains("varchar")){
-            this.type = "String";
-        }else if(type.contains("timestamp")){
-            this.type = "Date";
-        }
-        this.camelCaseName = camelCaseName;
-        this.description = description;
-        this.index = !StringUtils.isBlank(index);
-        this.nullable = "YES".equals(nullable);
-    }
 
     public boolean isAutoIncrement() {
         return autoIncrement;
@@ -48,6 +37,14 @@ public class DataBaseFieldsBO {
 
     public void setCamelCaseName(String camelCaseName) {
         this.camelCaseName = camelCaseName;
+    }
+
+    public String getUpperCamelCaseName() {
+        return upperCamelCaseName;
+    }
+
+    public void setUpperCamelCaseName(String upperCamelCaseName) {
+        this.upperCamelCaseName = upperCamelCaseName;
     }
 
     public String getName() {
