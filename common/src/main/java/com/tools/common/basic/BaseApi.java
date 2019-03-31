@@ -1,5 +1,5 @@
 /*
- * COPYRIGHT. ShenZhen JiMi Technology Co., Ltd. 2018.
+ * COPYRIGHT. ShenZhen JiMi Technology Co., Ltd. 2019.
  * ALL RIGHTS RESERVED.
  *
  * No part of this publication may be reproduced, stored in a retrieval system, or transmitted,
@@ -10,34 +10,18 @@
  *
  * Date                   By              Description
  * -------------------    -----------     -------------------------------------------
- * 2018/11/26    zhangduanfeng         Create the class
+ * 2019/3/28    wangjianwei         Create the class
  * http://www.jimilab.com/
  */
 
 
-package com.tools.common.basic.model;
-
+package com.tools.common.basic;
 
 /**
- * 基础DO，自增主键实体类
- *
- * @author zhangduanfeng
+ * @author wangjianwei
  * @version 1.0
- * @date 2018/11/26 16:39
+ * @date 2019/3/28 18:52
  */
-@SuppressWarnings("serial")
-public abstract class BaseLongKeyDO extends BaseDO {
-    /**
-     * 数据库主键ID
-     */
-    protected Long id;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+@org.springframework.validation.annotation.Validated
+public interface BaseApi extends Convertable {
 }

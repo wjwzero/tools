@@ -1,13 +1,13 @@
-package ${myUtil.packageName}.domain.entity;
+package ${myUtil.packageName}.domain.bo;
 
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
-import com.tools.common.basic.model.BaseLongKeyDO;
+import com.tools.common.basic.model.BaseBO;
 
 @Data
-public class ${myUtil.entityClassName}DO extends BaseLongKeyDO {
+public class ${myUtil.entityClassName}BO extends BaseBO {
 <%
     for(attr in myUtil.list){
         if(attr.description != null){

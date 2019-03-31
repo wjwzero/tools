@@ -53,7 +53,7 @@ public class AutoCreateFieldByTableTest extends BaseTest {
     @Test
     public void createJsonTest() throws JsonProcessingException {
 
-        List<TableColumnsDO> columnsList = autoCreateByTableServiceImpl.listColumnsByTable("t_user_account_info");
+        List<TableColumnsDO> columnsList = autoCreateByTableServiceImpl.listColumnsByTable("t_today_work_info");
 
         List<DataBaseFieldsBO> dataBaseFieldsBOList =  columnsList.stream().map(columns -> {
             DataBaseFieldsBO dbf = new DataBaseFieldsBO(columns.getField(),columns.getType(),columns.getKey(),columns.getNull(),StringUtils.underLineToCamel(columns.getField()),columns.getComment());

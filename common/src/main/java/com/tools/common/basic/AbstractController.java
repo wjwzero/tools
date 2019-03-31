@@ -18,13 +18,11 @@
 package com.tools.common.basic;
 
 import com.github.pagehelper.PageInfo;
-import com.jimi.together.base.basic.BaseApi;
 import com.jimi.together.base.basic.model.BaseVO;
 import com.jimi.together.base.basic.model.dto.ListResultDTO;
 import com.jimi.together.base.basic.model.dto.PageResultDTO;
 import com.jimi.together.base.basic.model.dto.ResultDTO;
 import com.jimi.together.base.constant.BasicErrorCodeEnum;
-import com.jimi.together.base.util.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,14 +99,14 @@ public abstract class AbstractController implements BaseApi {
      * @author zhangduanfeng
      * @date 2018/12/11 14:24
      */
-    protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<?> pageInfo, Class<T> tClass) {
+    /*protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<?> pageInfo, Class<T> tClass) {
         return PageResultDTO.of(BeanUtils.copyList(pageInfo.getList(), tClass))
                 .errorCode(BasicErrorCodeEnum.SUCCESS)
                 .page(pageInfo.getPageNum())
                 .size(pageInfo.getSize())
                 .totalPage(pageInfo.getPages())
                 .totalSize(pageInfo.getTotal());
-    }
+    }*/
 
     /**
      * Web分页成功结果
