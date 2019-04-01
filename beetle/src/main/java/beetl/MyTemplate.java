@@ -42,6 +42,8 @@ public class MyTemplate {
      */
     private String packageMapPath;
 
+    private String resourcesPath;
+
     private String collectionName;
     private List<DataBaseFields> list = new ArrayList<DataBaseFields>();
 
@@ -137,4 +139,13 @@ public class MyTemplate {
     public void setBoClassName(String boClassName) {
         this.boClassName = boClassName;
     }
+
+    public String getResourcesPath() {
+        return resourcesPath;
+    }
+
+    public void setResourcesPath(String resourcesPath) {
+        this.resourcesPath = resourcesPath;
+    }
+
 }

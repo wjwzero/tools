@@ -3,6 +3,7 @@ package ${myUtil.packageName}.controller;
 import ${myUtil.packageName}.domain.entity.${myUtil.entityClassName}DO;
 import ${myUtil.packageName}.domain.vo.${myUtil.voClassName};
 import ${myUtil.packageName}.service.${myUtil.entityClassName}Service;
+import com.report.controller.api.${myUtil.entityClassName}Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -17,14 +18,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/${myUtil.entityName}")
-public class ${myUtil.entityClassName}Controller extends AbstractController{
+public class ${myUtil.entityClassName}Controller extends AbstractController implements ${myUtil.entityClassName}Api{
     private Logger logger = LoggerFactory.getLogger(${myUtil.entityClassName}Controller.class);
 
     @Resource
     private ${myUtil.entityClassName}Service ${myUtil.entityName}Service;
 
+    @Override
     @RequestMapping(value = "/getById",method = RequestMethod.GET)
-    ResponseEntity getById(<%
+    public ResponseEntity getById(<%
         for(attr in myUtil.list){
             if(attr.name == "id")
                 print(attr.type);
@@ -37,29 +39,33 @@ public class ${myUtil.entityClassName}Controller extends AbstractController{
 
  <% for(attr in myUtil.list){
        if(attr.isIndex == true&&attr.name!='id'){  %>
+    @Override
     @RequestMapping(value = "/getBy${attr.upperCamelCaseName}",method = RequestMethod.GET)
-    ResponseEntity getBy${attr.upperCamelCaseName}(${attr.type} ${attr.camelCaseName}){
+    public ResponseEntity getBy${attr.upperCamelCaseName}(${attr.type} ${attr.camelCaseName}){
         ${myUtil.voClassName} result = convert(${myUtil.entityName}Service.getBy${attr.upperCamelCaseName}(${attr.camelCaseName}),${myUtil.voClassName}.class);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result);
     }
    <%   }
     } %>
 
+    @Override
     @RequestMapping(value = "/getAll",method = RequestMethod.GET)
-    ResponseEntity getAll(){
+    public ResponseEntity getAll(){
         List<${myUtil.entityClassName}DO> result = ${myUtil.entityName}Service.getAll();
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result);
     }
 
+    @Override
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    ResponseEntity insert(${myUtil.voClassName} ${myUtil.entityName}){
+    public ResponseEntity insert(${myUtil.voClassName} ${myUtil.entityName}){
         ${myUtil.entityClassName}DO ${myUtil.entityName}DO = convert(${myUtil.entityName},${myUtil.entityClassName}DO.class);
         Integer result = ${myUtil.entityName}Service.insert(${myUtil.entityName}DO);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result);
     }
 
+    @Override
     @RequestMapping(value = "/deleteById",method = RequestMethod.DELETE)
-    ResponseEntity deleteById(<%
+    public ResponseEntity deleteById(<%
         for(attr in myUtil.list){
             if(attr.name == "id")
                 print(attr.type);
@@ -70,8 +76,9 @@ public class ${myUtil.entityClassName}Controller extends AbstractController{
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result);
     }
 
+    @Override
     @RequestMapping(value = "/update",method = RequestMethod.PUT)
-    ResponseEntity update(${myUtil.voClassName} ${myUtil.entityName}){
+    public ResponseEntity update(${myUtil.voClassName} ${myUtil.entityName}){
         ${myUtil.entityClassName}DO ${myUtil.entityName}DO = convert(${myUtil.entityName},${myUtil.entityClassName}DO.class);
         Integer result = ${myUtil.entityName}Service.update(${myUtil.entityName}DO);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(result);

@@ -1,7 +1,7 @@
 [ {
   "name" : "id",
   "camelCaseName" : "id",
-  "type" : "Integer",
+  "type" : "Long",
   "index" : true,
   "nullable" : false,
   "description" : "主键",
@@ -9,7 +9,7 @@
 }, {
   "name" : "user_id",
   "camelCaseName" : "userId",
-  "type" : "Integer",
+  "type" : "Long",
   "index" : true,
   "nullable" : false,
   "description" : "用户id，t_user_info的ID",
@@ -49,7 +49,7 @@
 }, {
   "name" : "gmt_plan",
   "camelCaseName" : "gmtPlan",
-  "type" : "Date",
+  "type" : "LocalDateTime",
   "index" : false,
   "nullable" : false,
   "description" : "计划时间",
@@ -57,7 +57,7 @@
 }, {
   "name" : "gmt_plan_change",
   "camelCaseName" : "gmtPlanChange",
-  "type" : "Date",
+  "type" : "LocalDateTime",
   "index" : false,
   "nullable" : false,
   "description" : "计划变更时间",
@@ -65,7 +65,7 @@
 }, {
   "name" : "gmt_create",
   "camelCaseName" : "gmtCreate",
-  "type" : "Date",
+  "type" : "LocalDateTime",
   "index" : false,
   "nullable" : false,
   "description" : "创建时间, 插入时更新, 不允许修改",
@@ -73,7 +73,7 @@
 }, {
   "name" : "gmt_modified",
   "camelCaseName" : "gmtModified",
-  "type" : "Date",
+  "type" : "LocalDateTime",
   "index" : false,
   "nullable" : false,
   "description" : "修改时间, 根据当前时间戳更新",

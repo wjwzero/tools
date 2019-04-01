@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jimi.together.alarm.mapper.AlarmDealMapper">
+<mapper namespace="${myUtil.packageName}.mapper.${myUtil.entityClassName}Mapper">
 
-    <!-- XX -->
-    <insert id="batchInsert" parameterType="com.jimi.together.alarm.domain.entity.AlarmDealDO" keyProperty="id"
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="${myUtil.entityClassName}DO" keyProperty="id"
             keyColumn="id" useGeneratedKeys="true">
         INSERT INTO t_alarm_deal (alarm_id, deal_userid,deal_username,input_deal_username,
         deal_content,gmt_create,gmt_modified)
@@ -14,8 +14,9 @@
         </foreach>
     </insert>
 
+    <!-- 根据id查询 -->
     <select id="getById" resultType="${myUtil.entityClassName}DO" >
-    "SELECT <%
+        SELECT <%
             for(attr in myUtil.list)
             {
                 if(attrLP.last)
@@ -23,14 +24,14 @@
                 else
                     print(attr.name + ", ");
             }
-         %> FROM " + tableName + " WHERE id = #{id}"
+         %> FROM ${myUtil.collectionName} WHERE id = #{id}
     </select>
-
-    <select id="getBy${attr_p.upperCamelCaseName}" resultType="${myUtil.entityClassName}DO" >
     <% for(attr_p in myUtil.list){
-            if(attr_p.isIndex == true&&attr_p.name!='id'){  %>
+        if(attr_p.isIndex == true&&attr_p.name!='id'){  %>
 
-         @Select("SELECT <%
+    <!-- ${attr_p.description} -->
+    <select id="getBy${attr_p.upperCamelCaseName}" resultType="${myUtil.entityClassName}DO" >
+         SELECT <%
             for(attr in myUtil.list)
             {
                 if(attrLP.last)
@@ -38,13 +39,14 @@
                 else
                     print(attr.name + ", ");
             }
-         %> FROM " + tableName + " WHERE ${attr_p.name} = #{${attr_p.camelCaseName}}")
+         %> FROM ${myUtil.collectionName} WHERE ${attr_p.name} = #{${attr_p.camelCaseName}}
+    </select>
       <%    }
         }   %>
-    </select>
 
+    <!-- 获取所有 -->
     <select id="getAll" resultType="${myUtil.entityClassName}DO" >
-    SELECT <%
+        SELECT <%
             for(attr in myUtil.list)
             {
                 if(attrLP.last)
@@ -52,12 +54,13 @@
                 else
                     print(attr.name + ", ");
             }
-         %> FROM " + tableName
+         %> FROM ${myUtil.collectionName}
     </select>
 
+    <!-- 插入 -->
     <insert id="insert" parameterType="${myUtil.entityClassName}DO" keyProperty="id"
             keyColumn="id" useGeneratedKeys="true">
-    INSERT INTO " + tableName + "(<%
+        INSERT INTO ${myUtil.collectionName} (<%
             for(attr in myUtil.list){
                 if(attr.name=="id"&&attr.autoIncrement){
                     continue;
@@ -82,24 +85,25 @@
          %>)
     </insert>
 
+    <!-- 根据ID删除 -->
     <delete id="deleteById" parameterType="long">
-        DELETE FROM " + tableName + " WHERE id = #{id}
+        DELETE FROM ${myUtil.collectionName} WHERE id = #{id}
     </delete>
 
+    <!-- 更新 -->
     <update id="update"  parameterType="${myUtil.entityClassName}DO">
-     UPDATE " + tableName + " SET <%
-        for(attr in myUtil.list){
-            if(attrLP.last){
-                if(attr.name != "id")
-                    print(attr.name + "=#{" + attr.camelCaseName + "}");
-            }else{
-                if(attr.name != "id")
-                    print(attr.name + "=#{" + attr.camelCaseName + "}, ");
+         UPDATE ${myUtil.collectionName} SET <%
+            for(attr in myUtil.list){
+                if(attrLP.last){
+                    if(attr.name != "id")
+                        print(attr.name + "=#{" + attr.camelCaseName + "}");
+                }else{
+                    if(attr.name != "id")
+                        print(attr.name + "=#{" + attr.camelCaseName + "}, ");
+                }
             }
-        }
-     %> WHERE id = #{id}
+         %> WHERE id = #{id}
      </update>
 
 </mapper>
 
-}

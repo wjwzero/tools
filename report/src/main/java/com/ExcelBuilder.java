@@ -29,19 +29,19 @@ import java.util.List;
  * @Date 2018年1月25日 下午7:23:56
  */
 public abstract class ExcelBuilder {
-
-    /**
+/*
+    *//**
      * excel表头
-     */
+     *//*
     private List<String> excelHeader;
-    /**
+    *//**
      * excel页名
-     */
+     *//*
     private String sheetName;
 
-    /**
+    *//**
      * 行数
-     */
+     *//*
     private int rowNo = 50000;
 
     public ExcelBuilder(List<String> excelHeader, String sheetName, int rowNo) {
@@ -50,14 +50,14 @@ public abstract class ExcelBuilder {
         this.rowNo = rowNo;
     }
 
-    /**
+    *//**
      * @param list
      * @return
      * @Title: bulidRow
      * @Description: 获得项目抽象方法
      * @author WangJianWei
      * @date 2018年1月26日 上午9:15:48
-     */
+     *//*
     protected abstract void bulidRow(HSSFRow row, Object obj);
 
     public HSSFWorkbook Export(List list) {
@@ -103,5 +103,5 @@ public abstract class ExcelBuilder {
         }
 
         return wb;
-    }
+    }*/
 }

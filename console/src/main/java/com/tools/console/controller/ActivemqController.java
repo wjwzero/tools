@@ -25,7 +25,6 @@ import com.tools.console.controller.api.ActivemqApi;
 import com.tools.jms.consumer.ActiveMqConsumerService;
 import com.tools.jms.consumer.DynaicConsumer;
 import com.tools.jms.consumer.DynamicLoadPropertySource;
-import com.tools.jms.consumer.impl.ActiveMqConsumerServiceImpl;
 import com.tools.jms.producer.ActiveMqProducerService;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
