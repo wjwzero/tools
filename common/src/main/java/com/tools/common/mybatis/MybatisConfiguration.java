@@ -18,7 +18,7 @@ package com.tools.common.mybatis;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.jimi.together.base.basic.model.IBaseModel;
+import com.tools.common.basic.model.IBaseModel;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;

@@ -33,8 +33,8 @@ import java.util.Objects;
  * @version 1.0
  * @date 2018年11月23日 下午6:24:52
  */
-@Configuration
-@MapperScan(basePackages = {"com.jimi.together.**.mycat"}, sqlSessionFactoryRef = "mycatSqlSessionFactory")
+//@Configuration
+//@MapperScan(basePackages = {"com.jimi.together.**.mycat"}, sqlSessionFactoryRef = "mycatSqlSessionFactory")
 public class MycatConfiguration {
 
     @javax.annotation.Resource

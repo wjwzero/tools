@@ -17,8 +17,8 @@
 
 package com.tools.console.controller.api;
 
-import com.jimi.together.base.basic.model.dto.ResultDTO;
 import com.tools.common.basic.BaseApi;
+import com.tools.common.basic.model.dto.ResultDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;

@@ -46,9 +46,9 @@ public class DataSourceConfig {
         return new HikariDataSource(hikariConfig.getMysql());
     }
 
-    @Bean(name = "mycatDataSource")
+    /*@Bean(name = "mycatDataSource")
     public DataSource mycatDataSource() {
         logger.info("mycat连接池创建中.......");
         return new HikariDataSource(hikariConfig.getMycat());
-    }
+    }*/
 }

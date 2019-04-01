@@ -17,9 +17,7 @@
 
 package com.tools.common.basic;
 
-import com.jimi.together.base.basic.BaseMapper;
-import com.jimi.together.base.basic.BaseService;
-import com.jimi.together.base.basic.model.BaseDO;
+import com.tools.common.basic.model.BaseDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +33,9 @@ import java.util.Optional;
  * @date 2018/12/5 19:04
  */
 
-public abstract class AbstractService<T extends BaseDO, ID extends Serializable> implements BaseService<T, ID> {
+public abstract class AbstractService<T extends BaseDO, ID extends Serializable> {
 
-    @Autowired
+  /*  @Autowired
     private BaseMapper<T, ID> mapper;
 
     @Override
@@ -65,5 +63,5 @@ public abstract class AbstractService<T extends BaseDO, ID extends Serializable>
         if (get(id).isPresent()) {
             mapper.delete(id);
         }
-    }
+    }*/
 }

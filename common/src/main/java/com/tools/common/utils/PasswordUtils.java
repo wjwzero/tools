@@ -17,10 +17,6 @@
 
 package com.tools.common.utils;
 
-import com.jimi.together.base.util.StringUtils;
-import org.apache.commons.codec.digest.DigestUtils;
-
-import java.util.UUID;
 
 /**
  * 密码工具类
@@ -41,10 +37,10 @@ public final class PasswordUtils {
      * @author zhangduanfeng
      * @date 2018/12/12 17:58
      */
-    public static String defaultEncode(String password) {
+    /*public static String defaultEncode(String password) {
         String encodePassword = DigestUtils.md5Hex(password);
         return DigestUtils.sha256Hex(StringUtils.reverse(encodePassword)).toLowerCase();
-    }
+    }*/
 
     /**
      * 生成随机密码，仅用于手机APP用户。用于填充
@@ -53,7 +49,7 @@ public final class PasswordUtils {
      * @author zhangduanfeng
      * @date 2018/12/20 16:07
      */
-    public static String randomPassword() {
+    /*public static String randomPassword() {
         return defaultEncode(UUID.randomUUID().toString().toLowerCase());
-    }
+    }*/
 }

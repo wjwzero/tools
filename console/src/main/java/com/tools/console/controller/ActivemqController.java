@@ -17,15 +17,15 @@
 
 package com.tools.console.controller;
 
-import com.jimi.together.base.basic.model.dto.ResultDTO;
-import com.jimi.together.base.util.date.DateUtils;
 import com.tools.common.basic.AbstractController;
+import com.tools.common.basic.model.dto.ResultDTO;
 import com.tools.common.utils.SpringUtils;
 import com.tools.console.controller.api.ActivemqApi;
 import com.tools.jms.consumer.ActiveMqConsumerService;
 import com.tools.jms.consumer.DynaicConsumer;
 import com.tools.jms.consumer.DynamicLoadPropertySource;
 import com.tools.jms.producer.ActiveMqProducerService;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
+import static com.tools.common.basic.model.dto.ResultDTO.success;
 
 /**
  * @author wangjianwei
@@ -68,10 +70,10 @@ public class ActivemqController extends AbstractController implements ActivemqAp
     @Override
     public ResultDTO pushFixedMsg(@NotNull(message = "最大线程数不为空") Integer maxThreadNum, String destinationName, Long
             theardSleepTime, Integer loopNum) {
-        String msg = "{\"imei\":\"201902191356001\",\"msg\":{\"alertType\":\"offline\"," +
+        /*String msg = "{\"imei\":\"201902191356001\",\"msg\":{\"alertType\":\"offline\"," +
                 "\"deviceImei\":\"201902191356001\",\"gpsTime\":\"1547268298000\",\"lat\":\"22.577233\"," +
                 "\"lng\":\"113.916409\"},\"postTime\":\""+ DateUtils.format(LocalDateTime.now())+"\",\"type\":\"DEVICE\"}";
-        activeMqProducerService.run(maxThreadNum, loopNum, msg, destinationName, theardSleepTime);
+        activeMqProducerService.run(maxThreadNum, loopNum, msg, destinationName, theardSleepTime);*/
         return success();
     }
 

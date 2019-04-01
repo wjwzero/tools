@@ -18,12 +18,11 @@
 package com.tools.common.utils;
 
 
-import com.jimi.together.base.util.Assert;
-import com.jimi.together.base.util.ClassUtils;
-import com.jimi.together.base.util.StringUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.cglib.core.Converter;
+import org.springframework.objenesis.instantiator.util.ClassUtils;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -103,7 +102,7 @@ public class BeanUtils {
             return;
         }
         // bean to bean
-        cgCopy(source, target);
+        //cgCopy(source, target);
     }
 
     /**
@@ -129,12 +128,12 @@ public class BeanUtils {
      * @author zhangduanfeng
      * @date 2019/1/18 11:52
      */
-    public static <T> Optional<T> map2Bean(Map<?, ?> source, Class<T> tClass) {
+    /*public static <T> Optional<T> map2Bean(Map<?, ?> source, Class<T> tClass) {
         Assert.notNull(source, "Source must not be null");
         Optional<T> optional = ClassUtils.newInstance(tClass);
         optional.ifPresent(t -> BeanMap.create(t).putAll(source));
         return optional;
-    }
+    }*/
 
     /**
      * Bean转Map
@@ -200,12 +199,12 @@ public class BeanUtils {
             throw new IllegalArgumentException("use copyList()");
         }
 
-        Optional<T> optional = ClassUtils.newInstance(targetClass);
+       /* Optional<T> optional = ClassUtils.newInstance(targetClass);
         if (optional.isPresent()) {
             T t = optional.get();
             copyProperties(source, optional.get());
             return t;
-        }
+        }*/
         return null;
     }
 
@@ -225,7 +224,7 @@ public class BeanUtils {
         int sourceLength = source.length;
         Object target = Array.newInstance(targetClass, sourceLength);
         for (int i = 0; i < sourceLength; i++) {
-            Array.set(target, i, com.jimi.together.base.util.BeanUtils.copy(source[i], targetClass));
+            Array.set(target, i, BeanUtils.copy(source[i], targetClass));
         }
         return (T[]) target;
     }
@@ -271,9 +270,9 @@ public class BeanUtils {
      * @author zhangduanfeng
      * @date 2018/12/20 14:51
      */
-    private static void cgCopy(Object source, Object target) {
+    /*private static void cgCopy(Object source, Object target) {
         CachedBeanCopier.copy(source, target);
-    }
+    }*/
 
     /**
      * 判断基本类型，基本类型不仅仅包括以下的几个基本类型。还包括了primitiveMap中设定的类型。
@@ -311,7 +310,7 @@ public class BeanUtils {
      * @version 1.0
      * @date 2018/12/20 14:52
      */
-    static class CachedBeanCopier {
+    /*static class CachedBeanCopier {
 
         static final Map<String, BeanCopier> BEAN_COPIERS = new HashMap<>();
 
@@ -330,7 +329,7 @@ public class BeanUtils {
             copier.copy(srcObj, destObj, new DeepCopyConverter(destClass));
         }
 
-        /**
+        *//**
          * 缓存Key生成方法{srcClazz}@{destClazz}
          *
          * @param srcClazz  源类型
@@ -338,30 +337,30 @@ public class BeanUtils {
          * @return java.lang.String
          * @author zhangduanfeng
          * @date 2018/12/20 14:52
-         */
+         *//*
         private static String genKey(Class<?> srcClazz, Class<?> destClazz) {
             return srcClazz.getName() + "@" + destClazz.getName();
         }
 
-        /**
+        *//**
          * 用于深度复制的转换器
          *
          * @author zhangduanfeng
          * @version 1.0
          * @date 2018/12/11 15:58
-         */
+         *//*
         static class DeepCopyConverter implements Converter {
 
-            /**
+            *//**
              * 目标类型
-             */
+             *//*
             private Class<?> target;
 
-            /**
+            *//**
              * 构造器
              *
              * @param target 目标类型
-             */
+             *//*
             public DeepCopyConverter(Class<?> target) {
                 this.target = target;
             }
@@ -418,5 +417,5 @@ public class BeanUtils {
             }
 
         }
-    }
+    }*/
 }

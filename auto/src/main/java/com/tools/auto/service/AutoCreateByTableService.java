@@ -17,7 +17,6 @@
 
 package com.tools.auto.service;
 
-import com.jimi.together.base.basic.BaseService;
 import com.tools.auto.domain.entity.TableColumnsDO;
 import org.apache.ibatis.annotations.Param;
 
