@@ -21,7 +21,9 @@ public class DataBaseFieldsBO {
     public DataBaseFieldsBO(String name, String type, String index, String nullable, String camelCaseName, String description) {
         this.name = name;
         this.type = type;
-        if(type.contains(INT)){
+        if(type.contains("bigint")){
+            this.type = "Long";
+        }else if(type.equals(INT)){
             this.type = "Integer";
         }else if(type.contains("varchar")){
             this.type = "String";

@@ -18,8 +18,8 @@
 package com.tools.security;
 
 
-import com.jimi.together.base.util.Assert;
-import com.jimi.together.base.util.PasswordUtils;
+import com.tools.base.util.Assert;
+import com.tools.base.util.PasswordUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
