@@ -18,7 +18,7 @@
 package com.tools.auto.mapper;
 
 
-import com.tools.common.basic.model.BaseDO;
+import com.tools.base.basic.model.BaseDO;
 
 import java.io.Serializable;
 

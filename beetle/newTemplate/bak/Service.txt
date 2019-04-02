@@ -3,7 +3,7 @@ package ${myUtil.packageName}.service;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import ${myUtil.packageName}.entity.${myUtil.entityClassName};
-import ${myUtil.packageName}.mapper.${myUtil.entityClassName}Mapper;
+import ${myUtil.packageName}.mybatis.mapper.${myUtil.entityClassName}Mapper;
 import java.util.List;
 
 @Service

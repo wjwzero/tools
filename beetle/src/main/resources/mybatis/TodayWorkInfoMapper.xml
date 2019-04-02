@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mybatis.mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mybatis.mapper.dtd">
+<mybatis.mapper namespace="com.jimi.together.alarm.mybatis.mapper.AlarmDealMapper">
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="com.jimi.together.alarm.domain.entity.AlarmDealDO" keyProperty="id"
+            keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_alarm_deal (alarm_id, deal_userid,deal_username,input_deal_username,
+        deal_content,gmt_create,gmt_modified)
+        VALUES
+        <foreach collection="alarmDealDOList" item="alarmDealDO" separator=",">
+            (#{alarmDealDO.alarmId}, #{alarmDealDO.dealUserid}, #{alarmDealDO.dealUsername},#{alarmDealDO.inputDealUsername},
+            #{alarmDealDO.dealContent}, #{alarmDealDO.gmtCreate}, #{alarmDealDO.gmtModified})
+        </foreach>
+    </insert>
+
+    <!-- 根据id查询 -->
+    <select id="getById" resultType="TodayWorkInfoDO" >
+        SELECT id, user_id, tags, detials, status, is_disabled, gmt_plan, gmt_plan_change, gmt_create, gmt_modified, created_by, modified_by FROM t_today_work_info WHERE id = #{id}
+    </select>
+
+    <!-- 用户id，t_user_info的ID -->
+    <select id="getByUserId" resultType="TodayWorkInfoDO" >
+         SELECT id, user_id, tags, detials, status, is_disabled, gmt_plan, gmt_plan_change, gmt_create, gmt_modified, created_by, modified_by FROM t_today_work_info WHERE user_id = #{userId}
+    </select>
+
+    <!-- 类型 -->
+    <select id="getByTags" resultType="TodayWorkInfoDO" >
+         SELECT id, user_id, tags, detials, status, is_disabled, gmt_plan, gmt_plan_change, gmt_create, gmt_modified, created_by, modified_by FROM t_today_work_info WHERE tags = #{tags}
+    </select>
+
+    <!-- 获取所有 -->
+    <select id="getAll" resultType="TodayWorkInfoDO" >
+        SELECT id, user_id, tags, detials, status, is_disabled, gmt_plan, gmt_plan_change, gmt_create, gmt_modified, created_by, modified_by FROM t_today_work_info
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="TodayWorkInfoDO" keyProperty="id"
+            keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_today_work_info (id, user_id, tags, detials, status, is_disabled, gmt_plan, gmt_plan_change, gmt_create, gmt_modified, created_by, modified_by) VALUES (#{id}, #{userId}, #{tags}, #{detials}, #{status}, #{isDisabled}, #{gmtPlan}, #{gmtPlanChange}, #{gmtCreate}, #{gmtModified}, #{createdBy}, #{modifiedBy})
+    </insert>
+
+    <!-- 根据ID删除 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM t_today_work_info WHERE id = #{id}
+    </delete>
+
+    <!-- 更新 -->
+    <update id="update"  parameterType="TodayWorkInfoDO">
+         UPDATE t_today_work_info SET user_id=#{userId}, tags=#{tags}, detials=#{detials}, status=#{status}, is_disabled=#{isDisabled}, gmt_plan=#{gmtPlan}, gmt_plan_change=#{gmtPlanChange}, gmt_create=#{gmtCreate}, gmt_modified=#{gmtModified}, created_by=#{createdBy}, modified_by=#{modifiedBy} WHERE id = #{id}
+     </update>
+
+</mybatis.mapper>
+

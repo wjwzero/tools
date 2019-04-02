@@ -1,4 +1,4 @@
-package ${myUtil.packageName}.mapper;
+package ${myUtil.packageName}.mybatis.mapper;
 
 import ${myUtil.packageName}.domain.entity.${myUtil.entityClassName}DO;
 import org.apache.ibatis.annotations.*;

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
-import com.tools.common.basic.model.BaseBO;
+import com.tools.base.basic.model.BaseBO;
 
 @Data
 public class ${myUtil.entityClassName}BO extends BaseBO {

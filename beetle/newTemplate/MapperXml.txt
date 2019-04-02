@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${myUtil.packageName}.mapper.${myUtil.entityClassName}Mapper">
+<!DOCTYPE mybatis.mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mybatis.mapper.dtd">
+<mybatis.mapper namespace="${myUtil.packageName}.mybatis.mapper.${myUtil.entityClassName}Mapper">
 
     <!-- 批量插入 -->
     <insert id="batchInsert" parameterType="${myUtil.entityClassName}DO" keyProperty="id"
@@ -105,5 +105,5 @@
          %> WHERE id = #{id}
      </update>
 
-</mapper>
+</mybatis.mapper>
 

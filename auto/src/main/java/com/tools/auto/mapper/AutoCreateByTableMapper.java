@@ -23,13 +23,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * app用户告警推送设置
- *
- * @author Pan Juncai
- * @version 1.0
- * @date 2018/12/27 10:36
- */
+
 @Mapper
 public interface AutoCreateByTableMapper {
 

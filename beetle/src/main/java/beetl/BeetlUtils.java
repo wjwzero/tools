@@ -144,7 +144,7 @@ public class BeetlUtils {
     }
 
     public static void createDaoInterface(MyTemplate myTemplate) {
-        String filePath = myTemplate.getPackagePath() + "mapper";
+        String filePath = myTemplate.getPackagePath() + "mybatis/mapper";
         String fileName = myTemplate.getEntityClassName() + "Mapper.java";
         createJavaFile(myTemplate, filePath, fileName);
     }

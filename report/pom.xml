@@ -53,6 +53,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.39</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -120,7 +125,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.jimi.together.web.TogetherApplication</mainClass>
+                            <mainClass>com.tools.report.ReportApplication</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>${project.build.directory}/${project.name}/</outputDirectory>

@@ -20,8 +20,6 @@ package com.tools.auto.service.impl;
 import com.tools.auto.domain.entity.TableColumnsDO;
 import com.tools.auto.mapper.AutoCreateByTableMapper;
 import com.tools.auto.service.AutoCreateByTableService;
-import com.tools.common.basic.AbstractService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

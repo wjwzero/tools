@@ -3,7 +3,7 @@ package ${myUtil.packageName}.controller;
 import ${myUtil.packageName}.domain.entity.${myUtil.entityClassName}DO;
 import ${myUtil.packageName}.domain.vo.${myUtil.voClassName};
 import ${myUtil.packageName}.service.${myUtil.entityClassName}Service;
-import com.report.controller.api.${myUtil.entityClassName}Api;
+import com.tools.report.controller.api.${myUtil.entityClassName}Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;

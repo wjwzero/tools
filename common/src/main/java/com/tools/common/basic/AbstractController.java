@@ -18,8 +18,13 @@
 package com.tools.common.basic;
 
 import com.github.pagehelper.PageInfo;
-
-import com.tools.common.basic.model.BaseVO;
+import com.tools.base.basic.BaseApi;
+import com.tools.base.basic.model.BaseVO;
+import com.tools.base.basic.model.dto.ListResultDTO;
+import com.tools.base.basic.model.dto.PageResultDTO;
+import com.tools.base.basic.model.dto.ResultDTO;
+import com.tools.base.constant.BasicErrorCodeEnum;
+import com.tools.base.util.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,51 +38,51 @@ import java.util.function.Function;
  */
 
 public abstract class AbstractController implements BaseApi {
-   /* protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    *//**
+    /**
      * Web成功结果
      *
      * @return com.jimi.together.base.basic.model.dto.ResultDTO
      * @author zhangduanfeng
      * @date 2018/12/10 18:45
-     *//*
+     */
     protected static <T extends BaseVO> ResultDTO<T> success() {
         return ResultDTO.of(BasicErrorCodeEnum.SUCCESS);
     }
 
-    *//**
+    /**
      * Web成功结果
      *
      * @return com.jimi.together.base.basic.model.dto.ResultDTO<T>
      * @author zhangduanfeng
      * @date 2018/12/10 18:46
-     *//*
+     */
     protected static <T extends BaseVO> ResultDTO<T> success(T data) {
         return ResultDTO.of(data).errorCode(BasicErrorCodeEnum.SUCCESS);
     }
 
-    *//**
+    /**
      * 集合查询结果
      *
      * @param data 集合查询结果
      * @return com.jimi.together.base.basic.model.dto.ListResultDTO<T>
      * @author zhangduanfeng
      * @date 2018/12/10 18:46
-     *//*
+     */
     protected static <T extends BaseVO> ListResultDTO<T> success(List<T> data) {
         return ListResultDTO.of(data).errorCode(BasicErrorCodeEnum.SUCCESS);
     }
 
 
-    *//**
+    /**
      * Web分页成功结果
      *
      * @param pageInfo {@link PageInfo} Mybatis插件的分页结果
      * @return com.jimi.together.base.basic.model.dto.PageResultDTO<T>
      * @author zhangduanfeng
      * @date 2018/12/11 14:24
-     *//*
+     */
     protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<T> pageInfo) {
         return PageResultDTO.of(pageInfo.getList())
                 .errorCode(BasicErrorCodeEnum.SUCCESS)
@@ -87,7 +92,7 @@ public abstract class AbstractController implements BaseApi {
                 .totalSize(pageInfo.getTotal());
     }
 
-    *//**
+    /**
      * Web分页成功结果
      *
      * @param pageInfo {@link PageInfo} Mybatis插件的分页结果
@@ -95,17 +100,17 @@ public abstract class AbstractController implements BaseApi {
      * @return com.jimi.together.base.basic.model.dto.PageResultDTO<T>
      * @author zhangduanfeng
      * @date 2018/12/11 14:24
-     *//*
-    *//*protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<?> pageInfo, Class<T> tClass) {
+     */
+    protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<?> pageInfo, Class<T> tClass) {
         return PageResultDTO.of(BeanUtils.copyList(pageInfo.getList(), tClass))
                 .errorCode(BasicErrorCodeEnum.SUCCESS)
                 .page(pageInfo.getPageNum())
                 .size(pageInfo.getSize())
                 .totalPage(pageInfo.getPages())
                 .totalSize(pageInfo.getTotal());
-    }*//*
+    }
 
-    *//**
+    /**
      * Web分页成功结果
      *
      * @param pageInfo {@link PageInfo} Mybatis插件的分页结果
@@ -113,7 +118,7 @@ public abstract class AbstractController implements BaseApi {
      * @return com.jimi.together.base.basic.model.dto.PageResultDTO<T>
      * @author zhangduanfeng
      * @date 2018/12/11 14:24
-     *//*
+     */
     protected static <T extends BaseVO> PageResultDTO<T> success(PageInfo<?> pageInfo,
                                                                  Function<List<?>, List<T>> function) {
         List<T> results = function.apply(pageInfo.getList());
@@ -123,7 +128,7 @@ public abstract class AbstractController implements BaseApi {
                 .size(pageInfo.getSize())
                 .totalPage(pageInfo.getPages())
                 .totalSize(pageInfo.getTotal());
-    }*/
+    }
 
 
 }

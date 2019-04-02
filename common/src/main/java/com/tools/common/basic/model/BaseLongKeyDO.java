@@ -18,6 +18,8 @@
 package com.tools.common.basic.model;
 
 
+import com.tools.base.basic.model.BaseDO;
+
 /**
  * 基础DO，自增主键实体类
  *

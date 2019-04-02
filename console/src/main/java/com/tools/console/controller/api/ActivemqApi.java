@@ -17,8 +17,9 @@
 
 package com.tools.console.controller.api;
 
-import com.tools.common.basic.BaseApi;
-import com.tools.common.basic.model.dto.ResultDTO;
+import com.tools.base.basic.Convertable;
+import com.tools.base.basic.Loggable;
+import com.tools.base.basic.model.dto.ResultDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +37,7 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/activemq")
 @Validated
 @Api(tags = "activeMq模拟信息推送")
-public interface ActivemqApi extends BaseApi {
+public interface ActivemqApi extends Loggable, Convertable {
 
     /**
      * 停止推送
