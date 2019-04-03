@@ -1,14 +1,15 @@
 package com.tools.report.controller.api;
 
-import com.tools.base.basic.model.Convertable;
-import com.tools.base.basic.model.Loggable;
+
+import com.tools.base.basic.Convertable;
+import com.tools.base.basic.Loggable;
 import com.tools.report.domain.vo.TodayWorkInfoVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 
 @RestController

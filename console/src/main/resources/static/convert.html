@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+</head>
+<body>
+<div>
+    <div class="clearboth">
+        1、转换两段式 E.G.录音:0;围栏:1;<br />
+        2、转换三段式 E.G.10:w:21;20:w:22;30:w:23;60:w:24;120:w:25;
+    </div>
+    <div class="zone_send">
+        <a id="emoji" style="position:relative;left:374px;bottom:5px;cursor:pointer;" data-toggle="popover" title="表情"><img style="outline-width:40px;" src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/5c/huanglianwx_thumb.gif" />表情</a>
+        <textarea id="inp_send" class="form-control" style="height:100px;" placeholder="发送的内容"></textarea>
+        <br />
+        <button type="button" id="btn_send" class="btn btn-info" onclick="fun_sendto();">转换两段式</button>
+        <br />
+        <button type="button" id="btn_send1" class="btn btn-info" onclick="fun_sendto1();">转换三段式</button>
+    </div>
+</div>
+<div style="position:absolute;top:100px;left:470px;">
+    <div id="div_msgzone" class="panel panel-default">
+        <div class="panel-heading">消息窗口</div>
+        <div id="div_msg" class="panel-body"></div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/convert.js"></script>
+<script type="text/javascript" >
+    //initws("ws://10.0.60.50:9112?userId=1&token=0d4f47ee-3e16-45c2-8f62-e79147e59ec2&alarmTypes=-1");
+</script>
+</html>
