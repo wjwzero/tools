@@ -1,23 +1,6 @@
-/*
- * COPYRIGHT. ShenZhen JiMi Technology Co., Ltd. 2018.
- * ALL RIGHTS RESERVED.
- *
- * No part of this publication may be reproduced, stored in a retrieval system, or transmitted,
- * on any form or by any means, electronic, mechanical, photocopying, recording,
- * or otherwise, without the prior written permission of ShenZhen JiMi Network Technology Co., Ltd.
- *
- * Amendment History:
- *
- * Date                   By              Description
- * -------------------    -----------     -------------------------------------------
- * 2018/11/28    wangjianwei         Create the class
- * http://www.jimilab.com/
- */
+package com.tools.websocket.netty.configration;
 
-
-package com.tools.netty.service;
-
-import com.tools.netty.handler.AlarmNettyHandler;
+import com.tools.websocket.netty.handler.DefultNettyHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -51,7 +34,7 @@ public class NettyService {
     public Integer port;
 
     @Autowired
-    private AlarmNettyHandler alarmNettyHandler;
+    private DefultNettyHandler defultNettyHandler;
 
     public void run() {
         //服务端需要2个线程组  boss处理客户端连接  work进行客服端连接之后的处理
@@ -73,7 +56,7 @@ public class NettyService {
                             // 进行设置心跳检测
                             socketChannel.pipeline().addLast(new IdleStateHandler(60, 30, 60 * 30, TimeUnit.SECONDS));
                             // 配置通道处理  来进行业务处理
-                            socketChannel.pipeline().addLast(alarmNettyHandler);
+                            socketChannel.pipeline().addLast(defultNettyHandler);
                         }
                     });
             //绑定端口  开启事件驱动

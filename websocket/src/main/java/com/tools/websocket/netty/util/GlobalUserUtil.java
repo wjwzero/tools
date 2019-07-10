@@ -1,4 +1,4 @@
-package com.tools.netty.util;
+package com.tools.websocket.netty.util;
 
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;

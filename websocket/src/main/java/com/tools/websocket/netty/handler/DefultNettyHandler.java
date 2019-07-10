@@ -1,28 +1,10 @@
-/*
- * COPYRIGHT. ShenZhen JiMi Technology Co., Ltd. 2018.
- * ALL RIGHTS RESERVED.
- *
- * No part of this publication may be reproduced, stored in a retrieval system, or transmitted,
- * on any form or by any means, electronic, mechanical, photocopying, recording,
- * or otherwise, without the prior written permission of ShenZhen JiMi Network Technology Co., Ltd.
- *
- * Amendment History:
- *
- * Date                   By              Description
- * -------------------    -----------     -------------------------------------------
- * 2018/11/28    wangjianwei         Create the class
- * http://www.jimilab.com/
- */
+package com.tools.websocket.netty.handler;
 
-
-package com.tools.netty.handler;
-
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.tools.common.redis.RedisKey;
 import com.tools.common.redis.RedisUtils;
-import com.tools.netty.util.GlobalUserUtil;
+import com.tools.websocket.netty.util.GlobalUserUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -32,24 +14,19 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
+ *
+ *
  * @author wangjianwei
  * @version 1.0
  * @date 2018/11/28 11:25
@@ -57,16 +34,14 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 @Component
 @EnableJms
 @ChannelHandler.Sharable
-public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
+public class DefultNettyHandler extends SimpleChannelInboundHandler<Object> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AlarmNettyHandler.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(DefultNettyHandler.class);
     private static final String URI = "websocket";
-
     private static final String PARAMS_VERIFY_USER_ID = "userId";
     private static final String UPGRADE = "Upgrade";
     private static final String WEBSOCKET = "websocket";
-
+    private static final String WS_NETTY_CHANNEL = "ws:netty:channel";
     private volatile static AtomicInteger count = new AtomicInteger(0);
 
     private WebSocketServerHandshaker handshaker;
@@ -86,10 +61,7 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
     private static Cache<String, Map<String,Set<ChannelId>>> cacheChannel;
 
     @Resource
-    private StringRedisTemplate stringRedisTemplate;
-
-    @Resource
-    private RedisTemplate<String, byte[]> redisCacheTemplate;
+    private RedisUtils redisUtils;
 
     static {
         cacheChannel = CacheBuilder.newBuilder().maximumSize(50000).build();
@@ -109,9 +81,6 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
         }
     }
 
-    @Resource
-    private RedisUtils redisUtils;
-
     /** 
      * 连接上服务器
      * @param ctx 
@@ -121,19 +90,6 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
      */ 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        String channelIdStr = ctx.channel().id().toString();
-        Long groupId = 10000L;
-        redisUtils.set(RedisKey.AlarmPush.CHANNEL_CACHE+":"+groupId+"_"+channelIdStr, ctx.channel().id());
-        Set<String> channelSet = redisUtils.getKeys(RedisKey.AlarmPush.CHANNEL_CACHE+":"+"*"+"_"+channelIdStr);
-        logger.info(channelSet.toString());
-//        byte[] serializeTest =  serialize(ctx.channel().id());
-//        redisTemplate.delete(RedisKey.AlarmPush.CHANNEL_CACHE);
-       /* redisCacheTemplate.opsForValue().set(RedisKey.AlarmPush.CHANNEL_CACHE,serializeTest);*/
-        /*ValueOperations<String, byte[]> valueOperations = redisCacheTemplate.opsForValue();
-        byte[] serializeTest1 =  valueOperations.get(RedisKey.AlarmPush.CHANNEL_CACHE);*/
-        Object serializeTest1 =  redisUtils.get(RedisKey.AlarmPush.CHANNEL_CACHE);
-//        ChannelId channelIdTest = (ChannelId) unserizlize(serializeTest1);
-//        ChannelId channelIdTest = (ChannelId)unserizlize(serializeTest);
         logger.debug("【handlerAdded】====>{}", ctx.channel().id());
         count.getAndIncrement();
         logger.debug("【当前连接数】====>{}", count.get());
@@ -287,34 +243,22 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
             throw new UnsupportedOperationException("不支持二进制");
         }
 
-        //可以对消息进行处理
+        // 可以对消息进行处理
         logger.debug("收到消息{}", ((TextWebSocketFrame) msg).text());
-        JSONObject obj = JSONObject.parseObject(((TextWebSocketFrame) msg).text());
-        String token = obj.getString("token");
-        String alarmTypes = obj.getString("alarmTypes");
-        String userId = obj.getString("userId");
-        int voice = obj.getIntValue("voice");
-        if(tokenOauthVerifyNotPass(token, userId)){
+        //JSONObject obj = JSONObject.parseObject(((TextWebSocketFrame) msg).text());
+
+        // 已建立连接根据参数做出操作
+        /*if(tokenOauthVerifyNotPass(null, null)){
             //鉴权不通过关闭连接
             ctx.channel().writeAndFlush(new TextWebSocketFrame("更新操作鉴权不通过"));
             CloseWebSocketFrame c = new CloseWebSocketFrame();
             handshaker.close(ctx.channel(), c);
             return;
-        }
-/*        // 通过鉴权则修改用户告警推送配置
-        AlarmPushUserSetBO alarmPushUserSetBO = new AlarmPushUserSetBO(voice, alarmTypes);
-        stringRedisTemplate.opsForHash().put(RedisKey.AlarmPush.USER_SETTING, userId, JSONObject.toJSONString(alarmPushUserSetBO));*/
-        // 查看当前netty 连接信息
-        String showGlobalGroupChannel = obj.getString("showGlobalGroupChannel");
-        if("showGlobalGroupChannel".equals(showGlobalGroupChannel)){
-            String channelUserId = Optional.ofNullable(obj.getString("channelUserId")).orElse(userId);
-            String channelGroupId = Optional.ofNullable(obj.getString("channelGroupId")).orElse(userId);
-            // 缓存分组数
-            long cacheChanelSize = cacheChannel.size();
-            long channelUserIdSize = cacheChannel.getIfPresent(channelGroupId).get(channelUserId).size();
-            String str = String.format("当前netty缓存分组数%s;用户%s,当前连接通道数:%s",cacheChanelSize,channelUserId,channelUserIdSize);
-            ctx.channel().writeAndFlush(new TextWebSocketFrame(str));
-        }
+        }*/
+        ChannelId channelId = ctx.channel().id();
+        Set<String> channelSet = redisUtils.getKeys(WS_NETTY_CHANNEL +":"+"*");
+        logger.info(channelSet.toString());
+        ctx.channel().writeAndFlush(new TextWebSocketFrame(channelSet.toString()));
     }
 
     /** 
@@ -337,6 +281,13 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
             return;
         }
 
+        //获取ws请求的参数
+        /*Map<String, List<String>> parameters = webSocketUriParamsVerify(ctx, req);
+        if (parameters == null) {
+            return;
+        }*/
+        // TODO Oauth2 TOKEN鉴权
+
         WebSocketServerHandshakerFactory factory = new WebSocketServerHandshakerFactory(
                 "ws://" + req.headers().get("Host") + "/" + URI + "", null, false
         );
@@ -346,35 +297,21 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
         }
         //进行连接
         handshaker.handshake(ctx.channel(), req);
+        // TODO 判断对应规则关系是否存在,存在则更新 不存在则插入
         //获得当前的channelID
         ChannelId channelId = ctx.channel().id();
-        // 从缓存中获得对应关系id的channelIds
-        /*Map<String, Set<ChannelId>> userIdChannelIdMap = cacheChannel.getIfPresent(relationId);
-        // 是否存在通道,不存在则新增，存在则追加
-        if (CollectionUtils.isEmpty(userIdChannelIdMap)) {
-            Map<String, Set<ChannelId>> userIdChannelIdNewMap = new HashMap<>(6);
-            Set<ChannelId> channelIdSetNew = new HashSet<>();
-            channelIdSetNew.add(channelId);
-            userIdChannelIdNewMap.put(userId, channelIdSetNew);
-            cacheChannel.put(relationId, userIdChannelIdNewMap);
-        } else {
-            Set<ChannelId> userChannelIdSet = userIdChannelIdMap.get(userId);
-            if(userChannelIdSet == null || userChannelIdSet.size() ==0){
-                Set<ChannelId> channelIdSetNew = new HashSet<>();
-                channelIdSetNew.add(channelId);
-                userIdChannelIdMap.put(userId,channelIdSetNew);
-            }else{
-                userChannelIdSet.add(channelId);
-                userIdChannelIdMap.put(userId,userChannelIdSet);
-            }
-            cacheChannel.put(relationId, userIdChannelIdMap);
-        }
-        // 初始化计算阅读量 用户纬度
-        int unReadNum = alarmDataService.alarmIsReadNum(relationId, alarmTypes);
-        stringRedisTemplate.opsForHash().put(RedisKey.AlarmPush.CHANNEL_UNREAD, userId, String.valueOf(unReadNum));
-        // 传输未读数
-        String resJson = JSONObject.toJSONString(new PushAlarmDTO((long) unReadNum, ""));*/
-        ctx.channel().writeAndFlush(new TextWebSocketFrame("连接成功"));
+
+        String channelIdStr = ctx.channel().id().toString();
+        Long groupId = 10000L;
+        // TODO  根据握手param参数获得
+        // 首次握手规则 redis key  value(序列化ChannelID)
+        redisUtils.set(RedisKey.AlarmPush.CHANNEL_CACHE+":"+groupId+"_"+channelIdStr, ctx.channel().id());
+        redisUtils.expire(RedisKey.AlarmPush.CHANNEL_CACHE+":"+groupId+"_"+channelIdStr,7, TimeUnit.DAYS);
+        Set<String> channelSet = redisUtils.getKeys(RedisKey.AlarmPush.CHANNEL_CACHE+":"+"*"+"_"+channelIdStr);
+
+        logger.info(channelSet.toString());
+        // 首次握手返回消息
+        ctx.channel().writeAndFlush(new TextWebSocketFrame("首次握手"));
     }
 
     /**
@@ -386,11 +323,6 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
      * @date 2019/1/17 21:07
      */
     private boolean tokenOauthVerifyNotPass(String tokenValue, String userId) {
-        /*String redisTokenForUserId = Optional.ofNullable(stringRedisTemplate.opsForValue().get(RedisKey.Oauth.PREFIX_OAUTH2_USER_TO_ACCESS+userId)).orElseThrow(()->new ServiceException(AlarmWsErrorCodeEnum.ALARM_PUSH_WEB_SOCKET_TOKEN_ERROR)).toString();
-        if(!tokenValue.equals(redisTokenForUserId)){
-            logger.warn("token鉴权,用户ID{},传入TOKEN{},正确TOKEN{},对比结果{}", userId, tokenValue, redisTokenForUserId,tokenValue.equals(redisTokenForUserId));
-        }
-        return !tokenValue.equals(redisTokenForUserId);*/
         return true;
     }
 
@@ -413,27 +345,27 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
         return parameters;
     }
 
-    /*@JmsListener(destination = MqConstants.MQ_TOPIC_WEB_SOCKET_ALARM_INFO, containerFactory = "topicListenerFactory")
+    //@JmsListener(destination = "MQ_TOPIC_WEB_SOCKET_ALARM_INFO", containerFactory = "topicListenerFactory")
     public void consumer(byte[] msg) {
-        AlarmInfoBO message = JSONObject.parseObject(new String(msg), AlarmInfoBO.class);
-        logger.debug("获得MQ TOPIC推送信息{}",message);
+        //AlarmInfoBO message = JSONObject.parseObject(new String(msg), AlarmInfoBO.class);
+        //logger.debug("获得MQ TOPIC推送信息{}",message);
         // PAAS因历史原因保存的关系字段为userId 在此抽象为关系Id
-        String relationId = message.getUserId();
-        String alarmType = message.getAlarmType();
-        Map<String, Set<ChannelId>> userIdChannelIdMap = cacheChannel.getIfPresent(relationId);
+        //String relationId = message.getUserId();
+        //String alarmType = message.getAlarmType();
+//        Map<String, Set<ChannelId>> userIdChannelIdMap = cacheChannel.getIfPresent(relationId);
         // 分组下无用户无通道不存在
-        if (CollectionUtils.isEmpty(userIdChannelIdMap)) {
+        /*if (CollectionUtils.isEmpty(userIdChannelIdMap)) {
             return;
-        }
+        }*/
         // 用户下无通道,清除用户空通道,清除未读用户缓存
-        userIdChannelIdMap.entrySet().removeIf(entry->{
+        /*userIdChannelIdMap.entrySet().removeIf(entry->{
             boolean emptySet = CollectionUtils.isEmpty(entry.getValue());
             if(emptySet){
                 stringRedisTemplate.opsForHash().delete(RedisKey.AlarmPush.CHANNEL_UNREAD,String.valueOf(entry.getKey()));
             }
             return emptySet;
-        });
-        userIdChannelIdMap.forEach((userId,channelIdSet)->{
+        });*/
+        /*userIdChannelIdMap.forEach((userId,channelIdSet)->{
             // 清除失活通道
             channelIdSet.removeIf(channelId->{
                 Channel channel  = GlobalUserUtil.channels.find(channelId);
@@ -459,55 +391,7 @@ public class AlarmNettyHandler extends SimpleChannelInboundHandler<Object> {
                     channel.writeAndFlush(new TextWebSocketFrame(resJson));
                 });
             }
-        });
-    }*/
-
-    /**
-     * 序列化
-     */
-    public static byte [] serialize(Object obj){
-        ObjectOutputStream obi=null;
-        ByteArrayOutputStream bai=null;
-        try {
-            bai=new ByteArrayOutputStream();
-            obi=new ObjectOutputStream(bai);
-            obi.writeObject(obj);
-            byte[] byt=bai.toByteArray();
-            return byt;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                obi.close();
-                bai.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        });*/
     }
 
-    /**
-     * 反序列化
-     */
-    public static Object unserizlize(byte[] byt){
-        ObjectInputStream oii=null;
-        ByteArrayInputStream bis=null;
-        bis=new ByteArrayInputStream(byt);
-        try {
-            oii=new ObjectInputStream(bis);
-            Object obj=oii.readObject();
-            return obj;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                oii.close();
-                bis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
 }

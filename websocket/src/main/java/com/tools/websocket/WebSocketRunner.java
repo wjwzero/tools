@@ -15,10 +15,10 @@
  */
 
 
-package com.tools.netty;
+package com.tools.websocket;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.tools.netty.service.NettyService;
+import com.tools.websocket.netty.configration.NettyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
