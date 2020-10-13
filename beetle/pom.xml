@@ -21,7 +21,7 @@
         <fastjson.version>1.2.3</fastjson.version>
         <spring.version>4.2.6.RELEASE</spring.version>
         <jackson.version>2.7.0</jackson.version>
-        <junit>3.8.1</junit>
+        <junit>4.13.1</junit>
     </properties>
     <dependencies>
         <dependency>
