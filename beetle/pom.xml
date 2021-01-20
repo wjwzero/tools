@@ -20,7 +20,7 @@
         <mongodb.java.driver>3.2.2</mongodb.java.driver>
         <fastjson.version>1.2.3</fastjson.version>
         <spring.version>4.2.6.RELEASE</spring.version>
-        <jackson.version>2.7.0</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
         <junit>3.8.1</junit>
     </properties>
     <dependencies>
